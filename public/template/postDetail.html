@@ -1,0 +1,57 @@
+<div class="postView">
+	<span ng-click="backHome()" class="lastPage pointStyle">Return to home page</span>
+	<div class="detail" ng-model="post">
+		<div class="detail-operator">
+			<span ng-if="showByadmin() && !checkIfhide()" ng-click="hidePost(post._id)" class="pointStyle">Hide</span>
+			<span ng-if="showByadmin() && checkIfhide()" ng-click="showPost(post._id)" class="pointStyle">Display</span>
+			<span ng-if="showByauthor()" ng-click="editPost()" class="pointStyle">Modify</span>
+			<span ng-click="deletePost()" ng-if="showByauthor()" class="pointStyle">Delete</span>
+		</div>
+		<div class="detail-title"><h1>{{post.title}}</h1><hr></div>
+		<div class="detail-author">Post date: {{post.date | date: 'yyyy-MM-dd HH:mm'}} <span>Author: {{post.author}}</span><hr>
+		</div>
+		<div class="detail-article">
+			<p ng-show="!checkIfhide()" ng-bind-html="post.content"></p>
+			<p ng-show="checkIfhide()">This content has been hidden by the administrator.</p>
+		</div>
+	</div>
+	<hr>
+	<div class="detail-comment">
+	<h4>Comment area</h4>
+	<div ng-if="!showBysignin()" id="commentWarn">Log in and comment<a href="#!/signin"><button class="btn btn-success detailButton">Login</button></a></div>
+	<div ng-show="showBysignin()" class="detail-comment-input">
+		<img src="./images/member.jpg" class="memberImg">
+		<textarea ng-model="content" ng-focus='clear()'>{{content}}</textarea>
+		<div ng-class="{'errorAlert':true, 'AlertPosit-detail':true ,'show': AlertInfo !== ''}"><div class="arrow"></div>{{AlertInfo}}</div>
+		<button type="button" ng-click="submitComment()">Submit a comment</button>
+	</div>
+	<p ng-if="showBycomments()" ng-hide="comments.length">No comments yet</p>
+	<li ng-repeat = "comment in comments | orderBy: 'comment.time':true" class='list-unstyled commentList'>
+	<hr>
+	<div ng-if="!comment.isEdit">
+		<img src="./images/member.jpg" class="memberImg">
+		<span class="comment-author">{{comment.author}}</span>
+		<p ng-show="!comment.isHide" class="comment-content">{{comment.content}}</p>
+		<p ng-show="comment.isHide">This content has been hidden by the administrator</p>
+		<div class="comment-footer">
+			<span>{{comment.time | date: 'yyyy-MM-dd HH:mm'}}</span>
+			<a href="" ng-if="operatorshowByauthor(comment)" ng-click="editCommentstatus(comment._id)" class="pointStyle">Modify</a>
+			<a href="" ng-if="operatorshowByauthor(comment)" ng-click="deleteComment(comment._id)" class="pointStyle">Delete</a>
+			<a href="" ng-if="showByadmin() && !comment.isHide" ng-click="hideComment(comment._id)" class="pointStyle">Hide</a>
+			<a href="" ng-if="showByadmin() && comment.isHide" ng-click="showComment(comment._id)" class="pointStyle">Show</a>
+		</div>
+	</div>
+	<div ng-if="comment.isEdit">
+	<img src="./images/member.jpg" class="memberImg">
+	<span class="comment-author">{{comment.author}}</span>
+		<div class="edit-comment-input">
+			<textarea ng-model="comment.content">{{comment.content}}</textarea>
+			<div class="edit-comment-button-group">
+				<button type="button" ng-click="editComment(comment)" ng-disabled="!comment.content">Edit comment</button>
+				<button type="button" ng-click="cancel(comment)">Cancel</button>
+			</div>
+		</div>
+	</div>
+	</li>
+	</div>
+</div>

@@ -237,9 +237,9 @@ myController.controller("writeBlogCtrl", ['$scope', 'Post', '$location', '$cooki
 	var id;
 	$scope.addPost = function() {
 		var dataJson;
-		if ($scope.postTitle === '' && $scope.htmlVariable === '') $scope.AlertInfo = '标题和内容不能空';
-		else if ($scope.postTitle === '' && $scope.htmlVariable !== '') $scope.AlertInfo = '标题不能空';
-		else if ($scope.postTitle !== '' && $scope.htmlVariable === '') $scope.AlertInfo = '内容不能空';
+		if ($scope.postTitle === '' && $scope.htmlVariable === '') $scope.AlertInfo = 'Title and content cannot be empty';
+		else if ($scope.postTitle === '' && $scope.htmlVariable !== '') $scope.AlertInfo = 'Title cannot be empty';
+		else if ($scope.postTitle !== '' && $scope.htmlVariable === '') $scope.AlertInfo = 'Content cannot be empty';
 		else {
 			console.log($scope.htmlVariable);
 			if (!id)
